@@ -1,0 +1,96 @@
+const sections = document.querySelectorAll("section");
+
+function show(id) {
+    sections.forEach(section => section.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+}
+
+// Yes buttons
+document.querySelectorAll(".yes").forEach(button => {
+    button.onclick = () => show("s2");
+});
+
+// No button runs away
+const no = document.getElementById("no");
+
+no.onmouseover = () => {
+    no.style.position = "absolute";
+    no.style.left = Math.random() * 300 + "px";
+    no.style.top = Math.random() * 220 + "px";
+
+    const messages = [
+        "🥺 Really?",
+        "😂 Nice try",
+        "😏 Nope",
+        "❤️ Wrong answer"
+    ];
+
+    no.textContent = messages[Math.floor(Math.random() * messages.length)];
+};
+
+let chosenDate = "";
+
+// Date cards
+document.querySelectorAll(".option").forEach(card => {
+    card.onclick = () => {
+        chosenDate = card.dataset.date;
+        show("s3");
+    };
+});
+
+// Time buttons
+const timesDiv = document.getElementById("times");
+
+const times = [
+    "11:00 AM",
+    "1:00 PM",
+    "3:00 PM",
+    "5:30 PM",
+    "7:00 PM",
+    "8:00 PM"
+];
+
+let selectedTime = "";
+
+times.forEach(time => {
+    const button = document.createElement("button");
+
+    button.className = "time";
+    button.textContent = time;
+
+    button.onclick = () => {
+        selectedTime = time;
+
+        document.querySelectorAll(".time").forEach(b => {
+            b.style.outline = "none";
+        });
+
+        button.style.outline = "3px solid hotpink";
+    };
+
+    timesDiv.appendChild(button);
+});
+
+// Confirm
+document.getElementById("finish").onclick = () => {
+
+    const day = document.getElementById("day").value;
+
+    if (!day) {
+        alert("Please pick a date ❤️");
+        return;
+    }
+
+    if (!selectedTime) {
+        alert("Please choose a time ❤️");
+        return;
+    }
+
+    document.getElementById("summary").innerHTML = `
+        <h2>${chosenDate}</h2>
+        <p>📅 ${day}</p>
+        <p>🕒 ${selectedTime}</p>
+    `;
+
+    show("s4");
+};
