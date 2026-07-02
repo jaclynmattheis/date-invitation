@@ -1,0 +1,8 @@
+const secs=[...document.querySelectorAll('section')],show=i=>{secs.forEach(s=>s.classList.remove('active'));document.getElementById(i).classList.add('active')};
+document.querySelectorAll('.yes').forEach(b=>b.onclick=()=>show('s2'));
+const no=document.getElementById('no');no.onmouseover=()=>{no.style.position='absolute';no.style.left=Math.random()*300+'px';no.style.top=Math.random()*220+'px';no.textContent=['😅 Nope?','🥺 Really?','😂 Try again'][Math.floor(Math.random()*3)]};
+let choice='';document.querySelectorAll('.option').forEach(o=>o.onclick=()=>{choice=o.dataset.date;show('s3')});
+const times=['11:00 AM','1:00 PM','3:00 PM','5:30 PM','7:00 PM','8:00 PM'];let picked='';
+times.forEach(t=>{let b=document.createElement('button');b.className='time';b.textContent=t;b.onclick=()=>{picked=t;document.querySelectorAll('.time').forEach(x=>x.style.outline='');b.style.outline='3px solid hotpink'};timesDiv.appendChild(b)});const day=document.getElementById('day');const timesDiv=document.getElementById('times');
+finish.onclick=()=>{if(!day.value||!picked){alert('Pick a day and time ❤️');return;}summary.innerHTML=`<h2>${choice}</h2><p>📅 ${day.value}</p><p>🕒 ${picked}</p>`;show('s4');conf();}
+function conf(){const c=document.getElementById('confetti'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;let a=[...Array(140)].map(()=>({x:Math.random()*c.width,y:Math.random()*-c.height,r:2+Math.random()*5,v:2+Math.random()*4}));(function f(){x.clearRect(0,0,c.width,c.height);a.forEach(p=>{x.beginPath();x.arc(p.x,p.y,p.r,0,7);x.fill();p.y+=p.v;if(p.y>c.height)p.y=-10});requestAnimationFrame(f)})()}
